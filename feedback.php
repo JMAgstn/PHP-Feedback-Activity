@@ -1,3 +1,8 @@
+<?php 
+include '/xampp/htdocs/sp404/php-feedback-activity/inc/connection.php';
+$fb = mysqli_query($conn, "SELECT * FROM feedbacks ORDER BY datePosted DESC");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,38 +18,26 @@
     <title>Leave Feedback</title>
   </head>
   <body>
-  <?php include '/xampp/htdocs/sp404/php-feedback-activity/inc/header.php'; ?>
-
+    <?php include '/xampp/htdocs/sp404/php-feedback-activity/inc/header.php'; ?>
     <main>
       <div class="container d-flex flex-column align-items-center">
         <h2>Feedback</h2>
-
-        <div class="card my-3">
+        <?php while ($row = mysqli_fetch_array($fb)) { ?>
+          <div class="card my-3">
+          <div class="card-header text-center">
+            <h5><?php echo $row['name']; ?></h5>
+            <p><?php echo $row['email']; ?></p>
+          </div>
           <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
-            molestias animi earum eos dolorem repellat a quibusdam, aperiam vero
-            repellendus voluptatibus natus deserunt sed doloribus inventore,
-            totam labore maxime perferendis!
+            <?php echo $row['body']; ?>
+          </div>
+          <div class="card-footer text-muted text-center">
+            <?php echo $row['datePosted'] ?>
           </div>
         </div>
 
-        <div class="card my-3">
-          <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
-            molestias animi earum eos dolorem repellat a quibusdam, aperiam vero
-            repellendus voluptatibus natus deserunt sed doloribus inventore,
-            totam labore maxime perferendis!
-          </div>
-        </div>
-
-        <div class="card my-3">
-          <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
-            molestias animi earum eos dolorem repellat a quibusdam, aperiam vero
-            repellendus voluptatibus natus deserunt sed doloribus inventore,
-            totam labore maxime perferendis!
-          </div>
-        </div>
+          <?php } ?>
+        
       </div>
     </main>
 
