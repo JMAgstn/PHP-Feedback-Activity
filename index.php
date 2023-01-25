@@ -1,8 +1,6 @@
 <?php include '/xampp/htdocs/sp404/php-feedback-activity/inc/connection.php';
 // define variables and set to empty values
-$nameErr = "Enter your name";
-$emailErr = "Enter your email";
-$bodyErr = "Enter your feedback";
+$nameErr = $emailErr = $bodyErr = "";
 $name = $email = $body = "";
 $datePosted = date('d-m-y h:i:s');
 
@@ -39,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($name !== "" && $email !== "" && $body !== "") {mysqli_query($conn, "INSERT INTO feedbacks (name, email, body, datePosted) VALUES ('$name', '$email', '$body', '$datePosted')"); 
 		$_SESSION['message'] = "feedback saved"; 
-		header('location: index.php');
     $name = $email = $body = "";
+    header("Location: /sp404/php-feedback-activity/feedback.php");
   }
 }
 function test_input($data) {
@@ -85,9 +83,10 @@ function test_input($data) {
               class="form-control"
               id="name"
               name="name"
-              placeholder="<?php echo $nameErr?>"
+              placeholder="Enter your name"
               value="<?php echo $name?>"
             />
+            <?php echo "<em class='text-danger'>" . $nameErr . "</em>"?>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -96,9 +95,10 @@ function test_input($data) {
               class="form-control"
               id="email"
               name="email"
-              placeholder="<?php echo $emailErr?>"
+              placeholder="Enter your email"
               value="<?php echo $email?>"
             />
+            <?php echo "<em class='text-danger'>" . $emailErr . "</em>"?>
           </div>
           <div class="mb-3">
             <label for="body" class="form-label">Feedback</label>
@@ -106,8 +106,9 @@ function test_input($data) {
               class="form-control"
               id="body"
               name="body"
-              placeholder="<?php echo $bodyErr?>"
+              placeholder="Enter your feedback"
             ><?php echo $body?></textarea>
+            <?php echo "<em class='text-danger'>" . $bodyErr . "</em>"?>
           </div>
           <div class="mb-3">
             <input

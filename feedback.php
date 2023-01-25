@@ -1,6 +1,11 @@
 <?php 
 include '/xampp/htdocs/sp404/php-feedback-activity/inc/connection.php';
 $fb = mysqli_query($conn, "SELECT * FROM feedbacks ORDER BY datePosted DESC");
+$fbErr = "";
+if (mysqli_num_rows($fb) == 0) {
+  $fbErr = "No feedbacks found.";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +27,7 @@ $fb = mysqli_query($conn, "SELECT * FROM feedbacks ORDER BY datePosted DESC");
     <main>
       <div class="container d-flex flex-column align-items-center">
         <h2>Feedback</h2>
+        <p><?php echo $fbErr?></p>
         <?php while ($row = mysqli_fetch_array($fb)) { ?>
           <div class="card my-3">
           <div class="card-header text-center">
